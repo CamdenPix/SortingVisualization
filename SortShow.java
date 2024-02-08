@@ -345,6 +345,65 @@ public class SortShow extends JPanel {
 	}
 
 	//////////////////////////////////////////////////////////////////////
+
+	//The bubbleSort method
+	public void BubbleSort(){
+		//getting the date and time when the recursive merge sort starts
+		Calendar start = Calendar.getInstance();
+
+
+		//Bubble sort implementation
+		for (int i=0; i<total_number_of_lines-1; i++) {
+			for(int j=0; j<total_number_of_lines-i-1; j++){
+				if(lines_lengths[j] > lines_lengths[j+1]){
+					swap(j,j+1);
+					//redrawing line lengths
+					paintComponent(this.getGraphics());
+				}
+			}
+		}
+
+		Calendar end = Calendar.getInstance();
+		//getting the time it took for the iterative merge sort to execute
+		//subtracting the end time with the start time
+		SortGUI.bubbleTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+
+	//////////////////////////////////////////////////////////////////////
+
+	//The Shell sort method
+	public void ShellSort() {
+		//getting the date and time when the recursive merge sort starts
+		Calendar start = Calendar.getInstance();
+
+
+		//Shell sort Implementation
+		for (int space = total_number_of_lines / 2; space > 0; space = space / 2) {
+			for (int begin = 0; begin < 0 + space; begin++) {
+				incrementalInsertionSort(begin, total_number_of_lines - 1, space);
+			}
+		}
+		Calendar end = Calendar.getInstance();
+		//getting the time it took for the iterative merge sort to execute
+		//subtracting the end time with the start time
+		SortGUI.shellTime = end.getTime().getTime() - start.getTime().getTime();
+	}
+	//Method to assist with the shell sort implementation
+	public void incrementalInsertionSort(int first, int last, int space){
+		int unsorted, index;
+		for(unsorted=first+space; unsorted <= last; unsorted = unsorted+space){
+			int firstUnsorted = lines_lengths[unsorted];
+			for (index = unsorted-space; (index >= first) && (firstUnsorted < lines_lengths[index]); index = index - space) {
+				lines_lengths[index+space] = lines_lengths[index];
+				paintComponent(this.getGraphics());
+			}
+			lines_lengths[index +space] = firstUnsorted;
+
+		}
+	}
+
+
+	/////////////////////////////////////////////////////////////////////
 		
 		//This method resets the window to the scrambled lines display
 		public void reset(){
